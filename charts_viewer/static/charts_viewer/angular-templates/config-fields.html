@@ -1,0 +1,49 @@
+<div layout-padding>
+    <div layout="column" layout-align="start start">
+        <md-input-container>
+            <label>Chart Title</label>
+            <input placeholder="Item Title" ng-model="instanceObj.config.chartsViewer.chartTitle">
+        </md-input-container>
+        <md-input-container>
+            <label>Layer</label>
+            <md-select ng-model="instanceObj.config.chartsViewer.layer">
+                <md-option ng-repeat="layer in mapLayers" ng-value="layer.name">{{ layer.title }}</md-option>
+            </md-select>
+        </md-input-container>
+
+        <div layout="column">
+            <h4>Vertical Axis</h4>
+            <md-input-container>
+                <label>Vertical Axis Title</label>
+                <input placeholder="Vertical Axis Title" ng-model="instanceObj.config.chartsViewer.vAxisTitle">
+            </md-input-container>
+            <md-input-container>
+                <label>Attribute</label>
+                <md-select ng-model="instanceObj.config.chartsViewer.vAxisAttribute">
+                    <md-option ng-repeat="attribute in getLayerAttrs(item)" ng-if="attribute.isNumeric" ng-value="attribute.name">{{ attribute.title }}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex>
+                <label>Operation</label>
+                <md-select ng-model="instanceObj.config.chartsViewer.vAxisOperation">
+                    <md-option ng-repeat="operation in operations" ng-value="operation.name">{{ operation.title }}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div layout="column">
+            <h4>Horizontal Axis</h4>
+            <md-input-container>
+                <label>Horizontal Axis Title</label>
+                <input placeholder="Horizontal Axis Title" ng-model="instanceObj.config.chartsViewer.hAxisTitle">
+            </md-input-container>
+            <md-input-container>
+                <label>Group by Attribute</label>
+                <md-select ng-model="instanceObj.config.chartsViewer.hAxisAttribute">
+                    <md-option ng-repeat="attribute in getLayerAttrs(item)" ng-value="attribute.name">{{ attribute.title }}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+
+    </div>
+</div>
