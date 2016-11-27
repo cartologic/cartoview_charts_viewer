@@ -4,8 +4,8 @@
 {% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ STATIC_URL }}vendor/ol3/ol.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}viewer/css/map.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}viewer/css/style.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}cartoview_map_viewer/css/map.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}cartoview_map_viewer/css/style.css">
     {% for w in widgets %}
         {% for css_url in w.view.css %}<link rel="stylesheet" href="{{ css_url }}">{% endfor %}
     {% endfor %}
@@ -15,18 +15,19 @@
     <script type="text/javascript" src="{{ STATIC_URL }}vendor/angular-google-chart/ng-google-chart.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.14/proj4.js"></script>
 
-    {% include "viewer/dynamic_view_js.html" %}
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/view/app.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/view/map-service.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/view/map-directive.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/view/basic-controls-directives.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/view/identify-service.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/view/identify-results-directive.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/view/widget-view-directive.js"></script>
+    {% include "cartoview_map_viewer/dynamic_view_js.html" %}
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/view/app.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/view/map-service.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/view/map-directive.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/view/basic-controls-directives.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/view/identify-service.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/view/identify-results-directive.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/view/widget-view-directive.js"></script>
     {% for w in widgets %}
         {% for js_url in w.view.js %}<script type="text/javascript" src="{{ js_url }}"></script>{% endfor %}
     {% endfor %}
 {% endblock %}
+{% block header_toolbar %}{% endblock %}
 {% block body_directives %}ng-app="cartoview.chartsViewerApp" ng-controller="cartoview.chartsViewerApp.MainController"{% endblock %}
 {% block body %}
     <div class="content-panel" layout="column" ng-class="{'md-whiteframe-1dp has-content': identify.hasContent}">

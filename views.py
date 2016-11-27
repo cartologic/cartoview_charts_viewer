@@ -5,19 +5,15 @@ from cartoview.app_manager.models import AppInstance, App
 from . import APP_NAME
 import json
 from django.conf import settings
-from viewer import views as viewer_views
+from cartoview_map_viewer import views as viewer_views
 from .viewer_widgets import widgets
 
 from django.contrib.auth.decorators import login_required
 
 
-VIEW_MAP_TPL = "%s/view.html" % APP_NAME
-NEW_EDIT_TPL = "%s/new.html" % APP_NAME
-
-
 def view_map(request, instance_id):
     context = dict(widgets=widgets)
-    return viewer_views.view_app(request, instance_id, template="charts_viewer/view.html", context=context)
+    return viewer_views.view_app(request, instance_id, template="%s/view.html" % APP_NAME, context=context)
 
 
 def map_config(request):

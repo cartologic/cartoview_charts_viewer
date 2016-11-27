@@ -65,23 +65,22 @@ angular.module('cartoview.chartsViewerApp').service('dataService', function($htt
     // group features based on group attribute
     angular.forEach(data.features, function(f,index) {
 
-      var date = new Date(f.properties[hAxisAttribute]);
-      var year = date.getFullYear();
+      var val = f.properties[hAxisAttribute];
 
-      group[year] = group[year] || {count: 0, sum: 0, min: 0, max: 0, avg: 0};
-      group[year].count++;
-      group[year].sum += f.properties[vAxisAttribute];
+      group[val] = group[val] || {count: 0, sum: 0, min: 0, max: 0, avg: 0};
+      group[val].count++;
+      group[val].sum += f.properties[vAxisAttribute];
 
-      if (f.properties[vAxisAttribute] > 0){
-        if (group[year].min == 0) {
-           group[year].min = f.properties[vAxisAttribute];
+      if (val > 0){
+        if (group[val].min == 0) {
+           group[val].min = val;
         }
-        if (f.properties[vAxisAttribute] < group[year].min) {
-          group[year].min = f.properties[vAxisAttribute];
+        if (val < group[val].min) {
+          group[val].min = val;
         }
 
-        if (f.properties[vAxisAttribute] > group[year].max) {
-          group[year].max = f.properties[vAxisAttribute];
+        if (val > group[val].max) {
+          group[val].max = val;
         }
       }
 
@@ -139,20 +138,21 @@ angular.module('cartoview.chartsViewerApp').service('dataService', function($htt
         {id: "y", label: hAxisTitle, type: "string"},
         {id: "e", label: vAxisTitle, type: "number"}
       ],
-      "rows": rows};
+      "rows": rows
+    };
 
     dataChart.options = {
       width: width,
       height: height,
       title: chartTitle,
       bar: {'groupWidth': '85%'},
-      chartArea:{
+      chartArea: {
         left: 70,
         top: 40,
         width: width,
-        height: height - 80,
+        height: height - 80
       },
-      vAxis: {title: vAxisTitle,  gridlines: { count: 4 }},
+      vAxis: {title: vAxisTitle, gridlines: {count: 4}},
       hAxis: {title: hAxisTitle}
     };
 

@@ -5,7 +5,7 @@ angular.module('cartoview.chartsViewerApp').directive('chartsViewer',  function(
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: urlsHelper.static + "charts_viewer/angular-templates/charts-viewer.html",
+        templateUrl: urlsHelper.static + "cartoview_charts_viewer/angular-templates/charts-viewer.html",
         controller: function ($scope, chartsViewerService) {
             $scope.service = chartsViewerService;
             $scope.collaped = false;

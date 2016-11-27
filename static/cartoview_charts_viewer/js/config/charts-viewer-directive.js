@@ -21,7 +21,7 @@ angular.module('cartoview.viewer.editor').directive('chartsViewerConfig',  funct
     return {
         transclude: true,
         replace: true,
-        templateUrl: urlsHelper.static + "charts_viewer/angular-templates/config-fields.html?" + new Date().getTime(),
+        templateUrl: urlsHelper.static + "cartoview_charts_viewer/angular-templates/config-fields.html?" + new Date().getTime(),
         controller: function ($scope, dataService, $tastypieResource) {
             $scope.attributes = new $tastypieResource("geonodelayerattribute");
             $scope.instanceObj = dataService.instanceObj;
