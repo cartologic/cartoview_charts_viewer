@@ -1,9 +1,9 @@
 const xmlTpls = {
-    aggregate: require( 'file-loader?./wps-xml/aggregate/aggregate.xml'),
-    groupBy: require( 'file-loader?./wps-xml/aggregate/group-by.xml'),
-    filters: require( 'file-loader?./wps-xml/aggregate/filters.xml')
+    aggregate: require( './wps-xml/aggregate.xml'),
+    groupBy: require( './wps-xml/group-by.xml'),
+    filters: require( './wps-xml/filters.xml')
 }
-export default class WpsClient {
+class WpsClient {
     constructor(config) {
         this.config = config;
         this.url = config.geoserverUrl + "/wps/"
@@ -29,4 +29,4 @@ export default class WpsClient {
     }
 }
 
-export{WpsClient}
+export default WpsClient;

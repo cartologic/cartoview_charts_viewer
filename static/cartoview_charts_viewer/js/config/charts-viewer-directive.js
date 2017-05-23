@@ -28,25 +28,30 @@ angular.module('cartoview.viewer.editor').directive('chartsViewerConfig', functi
             $scope.instanceObj.config.chartsViewer = $scope.instanceObj.config.chartsViewer || {};
             var chartsViewer = $scope.instanceObj.config.chartsViewer;
             $scope.operations = [{
-                name: 'sum',
+                name: 'Sum',
                 title: 'Summation'
             },
                 {
-                    name: 'avg',
+                    name: 'Average',
                     title: 'Average'
                 },
                 {
-                    name: 'count',
+                    name: 'Count',
                     title: 'Count'
                 },
                 {
-                    name: 'min',
+                    name: 'Min',
                     title: 'Minimum'
                 },
+
                 {
-                    name: 'max',
+                    name: 'Max',
                     title: 'Maximum'
-                }];
+                },
+                {
+                    name: 'Median',
+                    title: 'Median'
+                },];
 
             $scope.mapLayers = [];
             var layersDict = {};

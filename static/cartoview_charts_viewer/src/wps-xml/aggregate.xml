@@ -20,7 +20,6 @@
         <wps:Body>
           <wfs:GetFeature service="WFS" version="1.0.0" outputFormat="GML2" xmlns:geonode="http://www.geonode.org/">
             <wfs:Query typeName="__typeName__">
-              __filters__
             </wfs:Query>
           </wfs:GetFeature>
         </wps:Body>

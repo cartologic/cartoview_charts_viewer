@@ -6,7 +6,7 @@ module.exports = {
   context: APP_DIR,
   entry: {
 
-    start: path.join(APP_DIR, 'index.jsx'),
+    charts: path.join(APP_DIR, 'index.jsx'),
   },
   output: {
     path: BUILD_DIR,
@@ -14,15 +14,14 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify('production')
-      }
+      'process.env.NODE_ENV': '"production"'
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-      },
-    }),
+        compressor: {
+          warnings: false,
+        },
+      }),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   node: {
     fs: "empty"
@@ -41,13 +40,17 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|gif|jpg|jpeg|svg|otf|ttf|eot|woff|xml)$/,
-        loader: 'file-loader'
+        test: /\.xml$/,
+        loader: 'raw-loader'
+      },
+      {
+        test: /\.(png|gif|jpg|jpeg|svg|otf|ttf|eot|woff)$/,
+        loader: 'file-loader',
       },
       {
         test: /\.css$/,
         loader: "style-loader!css-loader"
-      }
+      },
     ],
     noParse: [/dist\/ol\.js/, /dist\/jspdf.debug\.js/]
   }

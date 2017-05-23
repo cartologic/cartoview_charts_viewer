@@ -1,0 +1,24 @@
+{% extends "cartoview/base.html" %}
+{% block title %}
+    {{ block.super }} - {{ instance.title }}
+{% endblock %}
+{% block styles %}
+
+{% endblock %}
+{% block scripts %}
+    {% include "cartoview_map_viewer/dynamic_view_js.html" %}
+    {% for w in widgets %}
+        {% for js_url in w.view.js %}
+            <script type="text/javascript" src="{{ js_url }}"></script>{% endfor %}
+    {% endfor %}
+    <script>
+        var appConfig = {{ instance.config | safe }};
+        var geoserver_url = "{{ GEOSERVER_BASE_URL }}";
+    </script>
+{% endblock %}
+{% block header_toolbar %}{% endblock %}
+{% block body %}
+<div id="root">
+<h1>Charts</h1>
+</div>
+{% endblock %}

@@ -6,7 +6,7 @@ module.exports = {
   context: APP_DIR,
   entry: {
 
-    start: path.join(APP_DIR, 'index.jsx'),
+    charts: path.join(APP_DIR, 'index.jsx'),
   },
   output: {
     path: BUILD_DIR,
@@ -36,9 +36,6 @@ module.exports = {
       {
         test: /\.(png|gif|jpg|jpeg|svg|otf|ttf|eot|woff)$/,
         loader: 'file-loader',
-        query: {
-          useRelativePath: process.env.NODE_ENV === "production"
-        }
       },
       {
         test: /\.css$/,
