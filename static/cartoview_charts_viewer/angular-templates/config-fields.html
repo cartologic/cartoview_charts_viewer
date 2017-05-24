@@ -1,12 +1,18 @@
 <div layout-padding>
     <div layout="column" layout-align="start start">
+      <md-input-container flex>
+          <label>Chart Type</label>
+          <md-select ng-model="instanceObj.config.chartsViewer.type" required>
+              <md-option ng-repeat="type in chartTypes" ng-value="type.name">{{ type.title }}</md-option>
+          </md-select>
+      </md-input-container>
         <md-input-container>
             <label>Chart Title</label>
-            <input placeholder="Item Title" ng-model="instanceObj.config.chartsViewer.chartTitle">
+            <input placeholder="Item Title" ng-model="instanceObj.config.chartsViewer.chartTitle" required="">
         </md-input-container>
         <md-input-container>
             <label>Layer</label>
-            <md-select ng-model="instanceObj.config.chartsViewer.layer">
+            <md-select ng-model="instanceObj.config.chartsViewer.layer" required >
                 <md-option ng-repeat="layer in mapLayers" ng-value="layer.name">{{ layer.title }}</md-option>
             </md-select>
         </md-input-container>
@@ -14,13 +20,13 @@
         <div layout="column">
             <md-input-container>
                 <label>Attribute</label>
-                <md-select ng-model="instanceObj.config.chartsViewer.attribute">
+                <md-select ng-model="instanceObj.config.chartsViewer.attribute" required>
                     <md-option ng-repeat="attribute in getLayerAttrs(item)" ng-if="attribute.isNumeric" ng-value="attribute.name">{{ attribute.title }}</md-option>
                 </md-select>
             </md-input-container>
             <md-input-container flex>
                 <label>Operation</label>
-                <md-select ng-model="instanceObj.config.chartsViewer.operation">
+                <md-select ng-model="instanceObj.config.chartsViewer.operation" required>
                     <md-option ng-repeat="operation in operations" ng-value="operation.name">{{ operation.title }}</md-option>
                 </md-select>
             </md-input-container>
@@ -29,7 +35,7 @@
         <div layout="column">
             <md-input-container>
                 <label>Group by Attribute</label>
-                <md-select ng-model="instanceObj.config.chartsViewer.groupBy">
+                <md-select ng-model="instanceObj.config.chartsViewer.groupBy" required>
                     <md-option ng-repeat="attribute in getLayerAttrs(item)" ng-value="attribute.name">{{ attribute.title }}</md-option>
                 </md-select>
             </md-input-container>

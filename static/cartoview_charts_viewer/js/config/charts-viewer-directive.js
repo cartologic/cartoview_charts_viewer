@@ -52,7 +52,32 @@ angular.module('cartoview.viewer.editor').directive('chartsViewerConfig', functi
                     name: 'Median',
                     title: 'Median'
                 },];
-
+            $scope.chartTypes=[
+              {
+                name:'bar',
+                title:'Bar Chart'
+              },
+              {
+                name:'line',
+                title:'Line Chart'
+              },
+              {
+                name:'pie',
+                title:'Pie Chart'
+              },
+              {
+                name:'doughnut',
+                title:'Doughnut Chart'
+              },
+              {
+                name:'radar',
+                title:'Radar Chart'
+              },
+              {
+                name:'all',
+                title:'View All Charts'
+              },
+            ]
             $scope.mapLayers = [];
             var layersDict = {};
             var initialized = false;

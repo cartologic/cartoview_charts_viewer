@@ -1,47 +1,40 @@
-const path = require('path');
-const webpack = require('webpack');
-const APP_DIR = path.resolve(__dirname, 'src');
-const BUILD_DIR = path.resolve(__dirname, 'dist');
+var webpack = require('webpack');
+var path = require('path');
+var BUILD_DIR = path.resolve(__dirname, 'dist');
+var APP_DIR = path.resolve(__dirname, 'src');
+var plugins = [];
+var filename = '[name].bundle.js';
 module.exports = {
-  context: APP_DIR,
   entry: {
-
     charts: path.join(APP_DIR, 'index.jsx'),
   },
   output: {
     path: BUILD_DIR,
-    filename: '[name].bundle.js',
+    filename: filename,
+    library: '[name]',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
+    publicPath: "/static/cartoview_charts_viewer/dist/"
   },
-  plugins: [],
   node: {
     fs: "empty"
   },
+  plugins: [],
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx']
   },
   module: {
     loaders: [{
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          cacheDirectory: true,
-          presets: ['react', 'es2015']
-        }
-      },
-      {
-        test: /\.xml$/,
-        loader: 'raw-loader'
-      },
-      {
-        test: /\.(png|gif|jpg|jpeg|svg|otf|ttf|eot|woff)$/,
-        loader: 'file-loader',
-      },
-      {
-        test: /\.css$/,
-        loader: "style-loader!css-loader"
-      },
-    ],
-    noParse: [/dist\/ol\.js/, /dist\/jspdf.debug\.js/]
+      test: /\.(js|jsx)$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/
+    }, {
+      test: /\.xml$/,
+      loader: 'raw-loader'
+    }, {
+      test: /\.json$/,
+      loader: "json-loader"
+    }, ],
+    noParse: [/dist\/ol\.js/, /dist\/jspdf.debug\.js/,/dist\/js\/tether\.js/]
   }
 };

@@ -11,6 +11,7 @@
   "author": "cartologic",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "@boundlessgeo/sdk": "^1.0.0",
     "bootstrap": "^4.0.0-alpha.6",
     "chart.js": "^2.5.0",
     "jquery": "^3.2.1",
@@ -19,6 +20,7 @@
     "react-addons-transition-group": "^15.5.2",
     "react-chartjs-2": "^2.1.0",
     "react-dom": "^15.5.4",
+    "react-transition-group": "^1.1.3",
     "react-typist": "^1.1.0",
     "reactstrap": "^4.6.2"
   },
@@ -36,8 +38,7 @@
     "path": "^0.12.7",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.18.0",
-    "webpack": "^2.5.1",
-    "webpack-dev-server": "^2.4.5",
+    "webpack": "^1.14.0",
     "xml-loader": "^1.2.1"
   }
 }

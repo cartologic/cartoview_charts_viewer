@@ -1,57 +1,54 @@
-const path = require('path');
-const webpack = require('webpack');
-const APP_DIR = path.resolve(__dirname, 'src');
-const BUILD_DIR = path.resolve(__dirname, 'dist');
+var webpack = require('webpack');
+var path = require('path');
+var BUILD_DIR = path.resolve(__dirname, 'dist');
+var APP_DIR = path.resolve(__dirname, 'src');
+var plugins = [];
+var filename = '[name].js';
 module.exports = {
-  context: APP_DIR,
   entry: {
-
     charts: path.join(APP_DIR, 'index.jsx'),
   },
   output: {
     path: BUILD_DIR,
-    filename: '[name].bundle.js',
+    filename: filename,
+    library: '[name]',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
+    publicPath: "/static/cartoview_charts_viewer/dist/"
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-        compressor: {
-          warnings: false,
-        },
-      }),
-    new webpack.NoEmitOnErrorsPlugin()
-  ],
   node: {
     fs: "empty"
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: true
+      }
+    })
+  ],
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx']
   },
   module: {
     loaders: [{
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          cacheDirectory: true,
-          presets: ['react', 'es2015']
-        }
-      },
-      {
-        test: /\.xml$/,
-        loader: 'raw-loader'
-      },
-      {
-        test: /\.(png|gif|jpg|jpeg|svg|otf|ttf|eot|woff)$/,
-        loader: 'file-loader',
-      },
-      {
-        test: /\.css$/,
-        loader: "style-loader!css-loader"
-      },
-    ],
+      test: /\.(js|jsx)$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/
+    } {
+      test: /\.xml$/,
+      loader: 'raw-loader'
+    }, {
+      test: /\.json$/,
+      loader: "json-loader"
+    }, ],
     noParse: [/dist\/ol\.js/, /dist\/jspdf.debug\.js/]
   }
 };
