@@ -51,6 +51,7 @@
 
 <script>
     var appConfig = {{ instance.config | safe }};
+    var map_id={{instance.map_id}};
     var mapUrl = "{% url 'map_json' instance.map_id %}";
     var geoserver_url = "{{ GEOSERVER_BASE_URL }}";
     var abstract = " {% spaceless %}{{ instance.abstract|title }}{% endspaceless %} ";

@@ -3,7 +3,7 @@ var path = require('path');
 var BUILD_DIR = path.resolve(__dirname, 'dist');
 var APP_DIR = path.resolve(__dirname, 'src');
 var plugins = [];
-var filename = '[name].js';
+var filename = '[name].bundle.js';
 module.exports = {
   entry: {
     charts: path.join(APP_DIR, 'index.jsx'),
@@ -39,16 +39,21 @@ module.exports = {
   },
   module: {
     loaders: [{
-      test: /\.(js|jsx)$/,
-      loader: 'babel-loader',
-      exclude: /node_modules/
-    } {
-      test: /\.xml$/,
-      loader: 'raw-loader'
-    }, {
-      test: /\.json$/,
-      loader: "json-loader"
-    }, ],
-    noParse: [/dist\/ol\.js/, /dist\/jspdf.debug\.js/]
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      }, {
+        test: /\.xml$/,
+        loader: 'raw-loader'
+      }, {
+        test: /\.json$/,
+        loader: "json-loader"
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader"
+      }
+    ],
+    noParse: [/dist\/ol\.js/, /dist\/jspdf.debug\.js/, /dist\/js\/tether\.js/]
   }
 };

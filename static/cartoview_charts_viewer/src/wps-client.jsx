@@ -1,5 +1,6 @@
 const xmlTpls = {
     aggregate: require( './wps-xml/aggregate.xml'),
+    aggregateWithFilters: require( './wps-xml/aggregateWithFilters.xml'),
     groupBy: require( './wps-xml/group-by.xml'),
     filters: require( './wps-xml/filters.xml')
 }
@@ -12,6 +13,15 @@ class WpsClient {
         return fetch(this.url, {
           method: 'POST',
           body: this.getXml(xmlTpls.aggregate, params),
+          headers: new Headers({
+            'Content-Type': 'text/xml',
+          }),
+        }).then(response => response.json());
+    }
+    aggregateWithFilters(params){
+        return fetch(this.url, {
+          method: 'POST',
+          body: this.getXml(xmlTpls.aggregateWithFilters, params),
           headers: new Headers({
             'Content-Type': 'text/xml',
           }),

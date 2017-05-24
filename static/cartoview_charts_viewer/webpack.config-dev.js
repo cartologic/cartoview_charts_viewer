@@ -34,7 +34,10 @@ module.exports = {
     }, {
       test: /\.json$/,
       loader: "json-loader"
-    }, ],
-    noParse: [/dist\/ol\.js/, /dist\/jspdf.debug\.js/,/dist\/js\/tether\.js/]
+    }, {
+      test: /\.css$/,
+      loader: "style-loader!css-loader"
+    }],
+    noParse: [/dist\/ol\.js/, /dist\/jspdf.debug\.js/, /dist\/js\/tether\.js/]
   }
 };
