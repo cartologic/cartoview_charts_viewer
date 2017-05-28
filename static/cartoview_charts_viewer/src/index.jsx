@@ -138,7 +138,7 @@ export default class CartoviewCharts extends React.Component {
         name: 'pie',
         element: <PieChart data={this.state.data} labels={this.state.labels} colors={this.state.colors}></PieChart>
       }, {
-        name: 'pie',
+        name: 'radar',
         element: <RadarChart data={this.state.data} labels={this.state.labels} colors={appConfig.chartsViewer.attribute}></RadarChart>
       }
     ];

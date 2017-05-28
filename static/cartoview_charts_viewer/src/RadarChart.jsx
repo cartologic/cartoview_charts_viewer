@@ -14,7 +14,6 @@ export default class RadarChart extends React.Component {
       labels: this.props.labels,
       datasets: [
         {
-          label: this.props.label,
           data: this.props.data,
           backgroundColor:this.props.colors,
           borderColor: 'rgba(0, 0, 0, 0.75)',
