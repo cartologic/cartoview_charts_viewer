@@ -7,6 +7,7 @@ var filename = '[name].bundle.js';
 module.exports = {
   entry: {
     charts: path.join(APP_DIR, 'index.jsx'),
+    config: path.join(APP_DIR, 'AppRender.jsx'),
   },
   output: {
     path: BUILD_DIR,
@@ -21,7 +22,7 @@ module.exports = {
   },
   plugins: [],
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx']
   },
   module: {
     loaders: [{

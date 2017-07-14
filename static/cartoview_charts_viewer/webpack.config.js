@@ -7,6 +7,7 @@ var filename = '[name].bundle.js';
 module.exports = {
   entry: {
     charts: path.join(APP_DIR, 'index.jsx'),
+    config: path.join(APP_DIR, 'Edit.jsx'),
   },
   output: {
     path: BUILD_DIR,
