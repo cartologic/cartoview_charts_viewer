@@ -127,7 +127,7 @@ export default class ResourceSelector extends Component {
             </div>
           </div>
         })}
-        {(!this.state.loading && this.state.resources && this.state.mymaps) && <div className="row">
+        {(!this.state.loading && this.state.resources==[] && this.state.mymaps) && <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3 text-center">
             <h3>{'You have not created  any maps! please create a Map'}</h3>
           </div>
