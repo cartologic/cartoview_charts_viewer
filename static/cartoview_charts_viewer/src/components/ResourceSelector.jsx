@@ -12,6 +12,7 @@ export default class ResourceSelector extends Component {
       showPagination: true,
       pageCount: 0
     }
+    console.log(this.props.instance);
   }
   loadResources(off) {
     this.setState({loading: true})
@@ -26,7 +27,6 @@ export default class ResourceSelector extends Component {
       "owner__username" +
       "=" + this.props.username + "")
       : "";
-    console.log(userMapsFilter);
     fetch(this.props.resourcesUrl + "?limit=" + limit + "&" + "offset=" + offset + userMapsFilter).then((response) => response.json()).then((data) => {
       this.setState({
         resources: data.objects,
@@ -100,7 +100,7 @@ export default class ResourceSelector extends Component {
             </label>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-8 col-lg-8">
-          
+
               <input type="text" className="form-control" ref="search" defaultValue={''} onChange={this.handleSearch.bind(this)} placeholder="Search by title"/>
 
           </div>

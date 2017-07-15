@@ -5,16 +5,18 @@ import ResourceSelector from './components/ResourceSelector.jsx'
 import About from './components/About.jsx';
 import BasicConfig from './components/BasicConfig.jsx'
 import EditService from './services/editService.jsx'
+import ChartsConfig from './components/ChartsConfig.jsx'
 export default class Edit extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      step: 0,
+      config: {},
+      selectedResource: this.props.config.instance.map||undefined
+    }
     this.editService = new EditService({baseUrl: '/'});
   }
-  state = {
-    step: 0,
-    config: {},
-    selectedResource: undefined
-  }
+
   goToStep(step) {
     this.setState({step});
   }
@@ -58,7 +60,7 @@ export default class Edit extends Component {
         component: BasicConfig,
         props: {
           instance: this.state.selectedResource,
-          config: this.props.defaultconf,
+          config: this.props.config ? this.props.config.config : undefined,
           onComplete: (basicConfig) => {
             var {step} = this.state;
 
@@ -66,6 +68,24 @@ export default class Edit extends Component {
               config: Object.assign(this.state.config, basicConfig)
             })
             this.goToStep(++step)
+          }
+        }
+      },
+      {
+        label: "Charts Configrations",
+        component: ChartsConfig,
+        props: {
+          resource:this.state.selectedResource,
+          instance: this.props.config ? this.props.config.instance.config.chartsViewer : undefined,
+          id:this.props.config.instance ? this.props.config.instance.id:undefined,
+          urls:this.props.config.urls,
+          onComplete: (basicConfig) => {
+            var {step} = this.state;
+
+            this.setState({
+              config: Object.assign(this.state.config.config, basicConfig)
+            })
+            this.editService.save(this.state.config,this.props.instance? this.props.config.instance.id : undefined).then((res)=>window.location.href="/apps/cartoview_charts_viewer/"+res.id+"/edit")
           }
         }
       }

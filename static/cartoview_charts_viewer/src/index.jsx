@@ -61,6 +61,8 @@ export default class CartoviewCharts extends React.Component {
           var values = data.AggregationResults.map((item) => item[1]);
           var colors = data.AggregationResults.map((item) => this.dynamicColor());
           this.setState({data: values, labels: labels, colors: colors});
+        }).catch((error) => {
+          console.error(error);
         });
         // console.log(extent);
       }
@@ -92,6 +94,8 @@ export default class CartoviewCharts extends React.Component {
         if (config) {
           MapConfigService.load(MapConfigTransformService.transform(config), this.map);
         }
+      }).catch((error) => {
+        console.error(error);
       });
 
     }
@@ -120,6 +124,8 @@ export default class CartoviewCharts extends React.Component {
       var colors = data.AggregationResults.map((item) => this.dynamicColor());
       this.setState({data: values, labels: labels, colors: colors,loading:false});
       $(".se-pre-con").fadeOut("slow");
+    }).catch((error) => {
+      console.error(error);
     });
   }
   render() {

@@ -7,7 +7,7 @@ var filename = '[name].bundle.js';
 module.exports = {
   entry: {
     charts: path.join(APP_DIR, 'index.jsx'),
-    config: path.join(APP_DIR, 'Edit.jsx'),
+    config: path.join(APP_DIR, 'AppRender.jsx'),
   },
   output: {
     path: BUILD_DIR,
@@ -28,7 +28,7 @@ module.exports = {
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.optimize.DedupePlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: true
@@ -36,7 +36,7 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx']
   },
   module: {
     loaders: [{

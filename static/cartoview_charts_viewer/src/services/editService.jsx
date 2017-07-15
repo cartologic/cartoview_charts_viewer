@@ -5,11 +5,9 @@ export default class EditService {
     this.maps = [];
   }
   save(instanceConfig, id) {
-    console.log(instanceConfig);
-    console.log(getCRSFToken());
     const url = id
-      ? this.baseUrl + "apps/cartoview_map_viewer_client/"+id+"/edit"
-      : this.baseUrl + "apps/cartoview_map_viewer_client/new"
+      ? this.baseUrl + "apps/cartoview_charts_viewer/"+id+"/edit"
+      : this.baseUrl + "apps/cartoview_charts_viewer/new"
     return fetch(hasTrailingSlash(url) ? url : url+"/" , {
       method: 'POST',
       credentials: "same-origin",

@@ -7,7 +7,7 @@ const xmlTpls = {
 class WpsClient {
     constructor(config) {
         this.config = config;
-        this.url = config.geoserverUrl + "/wps/"
+        this.url = config.geoserverUrl + "wps"
     }
     aggregate(params){
         return fetch(this.url, {
