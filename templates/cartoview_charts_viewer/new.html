@@ -7,6 +7,7 @@
     {% include "geonode/ext_header.html" %}
     {% include "geonode/app_header.html" %}
     {{ block.super }}
+
 {% endblock %}
 {% block body %}
     <div id="page-wrapper">
@@ -23,10 +24,6 @@
     var viewer=new Viewer('root',{'urls':{'resources_url':"/api/maps","mapLayers":"/apps/maplayers/api","layerAttributes":"/apps/rest/app_manager/geonodelayerattribute/"},'limit':9},username);
     viewer.view();
     </script>
-    <script>
-    $(function () {
-        $('[data-toggle="popover"]').popover();
-    });
-</script>
+
 
 {% endblock %}

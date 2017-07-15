@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import ReactPaginate from 'react-paginate';
 import Img from 'react-image';
 import Spinner from 'react-spinkit'
-import '../css/checkbox.css'
+import Switch from 'react-toggle-switch'
+import 'react-toggle-switch/dist/css/switch.min.css'
 export default class ResourceSelector extends Component {
   constructor(props) {
     super(props);
@@ -10,9 +11,9 @@ export default class ResourceSelector extends Component {
       resources: [],
       loading: true,
       showPagination: true,
-      pageCount: 0
+      pageCount: 0,
+      mymaps:true
     }
-    console.log(this.props.instance);
   }
   loadResources(off) {
     this.setState({loading: true})
@@ -22,7 +23,7 @@ export default class ResourceSelector extends Component {
     const offset = typeof(off) === "undefined"
       ? 0
       : off;
-    let userMapsFilter = this.refs.mymaps.checked
+    let userMapsFilter = this.state.mymaps
       ? ("&" +
       "owner__username" +
       "=" + this.props.username + "")
@@ -48,12 +49,16 @@ export default class ResourceSelector extends Component {
 
   };
   handleUserMapsChecked() {
-    this.loadResources(0)
+    const flag_maps=this.state.mymaps
+    console.log("before",flag_maps);
+    this.setState({mymaps:!flag_maps},()=>this.loadResources(0));
+    console.log("after",flag_maps);
+
   }
   handleSearch() {
     if (this.refs.search.value != '') {
       this.setState({loading: true})
-      let userMapsFilter = this.refs.mymaps.checked
+      let userMapsFilter = this.state.mymaps
         ? ("&" +
         "owner__username" +
         "=" + this.props.username + "")
@@ -90,14 +95,10 @@ export default class ResourceSelector extends Component {
             display: 'flex'
           }}>
             <span style={{
-              marginTop: 5,
               fontWeight: 500,
               marginRight: 10
             }}>{'My Maps'}</span>
-            <label className="switch">
-              <input type="checkbox" defaultChecked ref="mymaps" onChange={this.handleUserMapsChecked.bind(this)}/>
-              <span className="slider round"></span>
-            </label>
+          <Switch on={this.state.mymaps} onClick={this.handleUserMapsChecked.bind(this)}/>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-8 col-lg-8">
 
@@ -126,6 +127,11 @@ export default class ResourceSelector extends Component {
             </div>
           </div>
         })}
+        {(!this.state.loading && this.state.resources && this.state.mymaps) && <div className="row">
+          <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3 text-center">
+            <h3>{'You have not created  any maps! please create a Map'}</h3>
+          </div>
+        </div>}
         <ReactPaginate previousLabel={"previous"} nextLabel={"next"} breakLabel={< a href = "javascript:;" > ...</a>} breakClassName={"break-me"} pageCount={this.state.pageCount} marginPagesDisplayed={2} pageRangeDisplayed={5} onPageChange={this.handlePageClick} containerClassName={"pagination"} subContainerClassName={"pages pagination"} activeClassName={"active"}/>
       </div>
     )
