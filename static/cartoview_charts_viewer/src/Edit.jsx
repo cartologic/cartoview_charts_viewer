@@ -12,7 +12,7 @@ export default class Edit extends Component {
     this.state = {
       step: 0,
       config: {},
-      selectedResource: this.props.config.instance.map||undefined
+      selectedResource: this.props.config.instance ? this.props.config.instance.map:undefined
     }
     this.editService = new EditService({baseUrl: '/'});
   }
@@ -76,7 +76,7 @@ export default class Edit extends Component {
         component: ChartsConfig,
         props: {
           resource:this.state.selectedResource,
-          instance: this.props.config ? this.props.config.instance.config.chartsViewer : undefined,
+          instance: this.props.config.instance ? this.props.config.instance.config.chartsViewer : undefined,
           id:this.props.config.instance ? this.props.config.instance.id:undefined,
           urls:this.props.config.urls,
           onComplete: (basicConfig) => {

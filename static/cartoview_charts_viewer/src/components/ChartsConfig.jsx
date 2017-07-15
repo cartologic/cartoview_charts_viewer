@@ -148,7 +148,7 @@ export default class BasicConfig extends Component {
               <option value={""}>Choose Attribute</option>
               {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
                 let type = attribute.attribute_type;
-                if (numericTypes.indexOf(type) != -1) {
+                if (numericTypes.indexOf(type) != -1 && type.indexOf("gml:") == -1) {
                   return <option key={attribute.id} value={attribute.attribute}>
                     {attribute.attribute || attribute.attribute_label}
                   </option>
