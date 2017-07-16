@@ -77,7 +77,8 @@ export default class CartoviewCharts extends React.Component {
       loading: true,
       config: {
         mapId: map_id
-      }
+      },
+      modal: false
     }
   }
   update(config) {
@@ -103,6 +104,11 @@ export default class CartoviewCharts extends React.Component {
   componentWillMount() {
     this.update(this.state.config);
   }
+  toggle() {
+  this.setState({
+    modal: !this.state.modal
+  });
+}
   dynamicColor() {
     var r = Math.floor(Math.random() * 255);
     var g = Math.floor(Math.random() * 255);
@@ -127,6 +133,7 @@ export default class CartoviewCharts extends React.Component {
     }).catch((error) => {
       console.error(error);
     });
+    // $(".se-pre-con").fadeOut("slow");
   }
   render() {
     const charts = [
@@ -151,31 +158,22 @@ export default class CartoviewCharts extends React.Component {
     let chartElement = appConfig.chartsViewer.type != "all"
       ? charts.find(chart => chart.name == appConfig.chartsViewer.type).element
       : charts.map((chart) => chart.element);
-    let title = <h1 className="display-4 text-center">{appConfig.chartsViewer.chartTitle}</h1>
-    let description = <Typist className="MyTypist" cursor={{
-      show: true,
-      blink: true,
-      element: '|',
-      hideWhenDone: true,
-      hideWhenDoneDelay: 1000
-    }}>
-      {abstract}
-    </Typist>;
+    let title =appConfig.chartsViewer.chartTitle
 
     return (
       <div>
-        <Container style={{
-          marginTop: 50,
-          marginBottom: 50
-        }}>
-          {title}
+        <div className="page-header">
+          <div className="row">
+            <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8"><span className="h1">{title}</span></div>
+          </div>
+        </div>
+
           <br></br>
           <Row>
             <div ref="map" className="map"></div>
           </Row>
           <hr></hr>
           {chartElement}
-        </Container>
       </div>
     )
   }

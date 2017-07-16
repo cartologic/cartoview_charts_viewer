@@ -23,7 +23,6 @@ export default class PieChart extends React.Component {
     }
     return (
       <div>
-        <h6 className="text-center">as Pie Chart</h6>
         <Row>
           <Col style={{
             backgroundColor: 'white'

@@ -23,7 +23,6 @@ export default class RadarChart extends React.Component {
     }
     return (
       <div>
-        <h6 className="text-center">as Radar Chart</h6>
         <Row>
           <Col style={{
             backgroundColor: 'white'

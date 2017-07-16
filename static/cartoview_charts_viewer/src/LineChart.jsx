@@ -24,7 +24,6 @@ export default class LineChart extends React.Component {
     }
     return (
       <div>
-        <h6 className="text-center">as Line Chart</h6>
         <Row>
           <Col style={{
             backgroundColor: 'white'
