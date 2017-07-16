@@ -63,7 +63,7 @@ export default class ResourceSelector extends Component {
         "owner__username" +
         "=" + this.props.username + "")
         : "";
-      fetch(this.props.resourcesUrl + "?" + "title__contains" + "=" + this.refs.search.value + userMapsFilter).then((response) => response.json()).then((data) => {
+      fetch(this.props.resourcesUrl + "?" + "title__icontains" + "=" + this.refs.search.value + userMapsFilter).then((response) => response.json()).then((data) => {
         this.setState({resources: data.objects, loading: false})
       }).catch((error) => {
         console.error(error);
@@ -101,8 +101,8 @@ export default class ResourceSelector extends Component {
           <Switch on={this.state.mymaps} onClick={this.handleUserMapsChecked.bind(this)}/>
             <span style={{
               fontWeight: 500,
-              marginRight: 10
-            }}>{' My Maps'}</span>
+              marginLeft: 10
+            }}>{'My Maps'}</span>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-8 col-lg-8">
 
