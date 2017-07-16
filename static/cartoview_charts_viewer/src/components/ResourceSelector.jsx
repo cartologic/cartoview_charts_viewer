@@ -97,8 +97,12 @@ export default class ResourceSelector extends Component {
             <span style={{
               fontWeight: 500,
               marginRight: 10
-            }}>{'My Maps'}</span>
+            }}>{'All Maps'}</span>
           <Switch on={this.state.mymaps} onClick={this.handleUserMapsChecked.bind(this)}/>
+            <span style={{
+              fontWeight: 500,
+              marginRight: 10
+            }}>{' My Maps'}</span>
           </div>
           <div className="col-xs-12 col-sm-6 col-md-8 col-lg-8">
 

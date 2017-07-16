@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './css/app.css'
 import Navigator from './components/Navigator.jsx';
 import ResourceSelector from './components/ResourceSelector.jsx'
-import About from './components/About.jsx';
 import BasicConfig from './components/BasicConfig.jsx'
 import EditService from './services/editService.jsx'
 import ChartsConfig from './components/ChartsConfig.jsx'
@@ -24,19 +23,6 @@ export default class Edit extends Component {
     var {step} = this.state
     const steps = [
       {
-        label: "About",
-        component: About,
-        props: {
-          onComplete: () => {
-            var {step} = this.state;
-            this.goToStep(++step)
-          },
-          content: <p>
-            {"Creating charts for numeric attributes of features in a specified layer that fall in the visible map extent. The Charts can be configured to show the sum, average, minimum and maximum of specified field values."}
-          </p>,
-          title: "Cartoview Charts Viewer"
-        }
-      }, {
         label: "Select Map",
         component: ResourceSelector,
         props: {
@@ -85,7 +71,7 @@ export default class Edit extends Component {
             this.setState({
               config: Object.assign(this.state.config.config, basicConfig)
             })
-            this.editService.save(this.state.config,this.props.instance? this.props.config.instance.id : undefined).then((res)=>window.location.href="/apps/cartoview_charts_viewer/"+res.id+"/edit")
+            this.editService.save(this.state.config,this.props.instance? this.props.config.instance.id : undefined).then((res)=>window.location.href="/apps/cartoview_charts_viewer/"+res.id+"/view")
           }
         }
       }
