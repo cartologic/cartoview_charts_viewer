@@ -1,21 +1,16 @@
+{% extends "app_manager/app_install_base.html" %}
+{% load bootstrap_tags staticfiles %}
+{% load i18n %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ instance.title }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+{% block title %} {{ block.super }} - {% trans "Charts Viewer" %} {% endblock %}
+{% block head %}
+    {% include "geonode/ext_header.html" %}
+    {% include "geonode/app_header.html" %}
+    {{ block.super }}
     <style>
         html {
             height: 100%;
             margin: 0px;
-        }
-
-        body {
-            background-image: url("{% static 'cartoview_charts_viewer/img/bright_squares.png' %}");
-            background-repeat: repeat;
         }
 
         .no-js #loader {
@@ -44,12 +39,17 @@
             margin-right: auto;
         }
     </style>
-</head>
-<body>
-<div class="se-pre-con"></div>
+{% endblock %}
+{% block body %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+          <div class="se-pre-con"></div>
+            <div id="root"></div>
+        </div>
+    </div>
 
-<div id="root"></div>
-
+{% endblock %}
+{% block extra_script %}
 <script>
     var appConfig = {{ instance.config | safe }};
     var map_id={{instance.map_id}};
@@ -58,5 +58,4 @@
     var abstract = " {% spaceless %}{{ instance.abstract|title }}{% endspaceless %} ";
 </script>
 <script src="{% static 'cartoview_charts_viewer/dist/charts.bundle.js' %}"></script>
-</body>
-</html>
+{% endblock %}

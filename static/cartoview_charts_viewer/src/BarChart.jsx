@@ -24,7 +24,6 @@ export default class BarChart extends React.Component {
     }
     return (
       <div>
-        <h6 className="text-center">as Bar Chart</h6>
         <Row>
           <Col style={{
             backgroundColor: 'white'

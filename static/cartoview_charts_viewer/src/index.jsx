@@ -61,6 +61,8 @@ export default class CartoviewCharts extends React.Component {
           var values = data.AggregationResults.map((item) => item[1]);
           var colors = data.AggregationResults.map((item) => this.dynamicColor());
           this.setState({data: values, labels: labels, colors: colors});
+        }).catch((error) => {
+          console.error(error);
         });
         // console.log(extent);
       }
@@ -75,7 +77,8 @@ export default class CartoviewCharts extends React.Component {
       loading: true,
       config: {
         mapId: map_id
-      }
+      },
+      modal: false
     }
   }
   update(config) {
@@ -92,6 +95,8 @@ export default class CartoviewCharts extends React.Component {
         if (config) {
           MapConfigService.load(MapConfigTransformService.transform(config), this.map);
         }
+      }).catch((error) => {
+        console.error(error);
       });
 
     }
@@ -99,6 +104,11 @@ export default class CartoviewCharts extends React.Component {
   componentWillMount() {
     this.update(this.state.config);
   }
+  toggle() {
+  this.setState({
+    modal: !this.state.modal
+  });
+}
   dynamicColor() {
     var r = Math.floor(Math.random() * 255);
     var g = Math.floor(Math.random() * 255);
@@ -120,7 +130,10 @@ export default class CartoviewCharts extends React.Component {
       var colors = data.AggregationResults.map((item) => this.dynamicColor());
       this.setState({data: values, labels: labels, colors: colors,loading:false});
       $(".se-pre-con").fadeOut("slow");
+    }).catch((error) => {
+      console.error(error);
     });
+    // $(".se-pre-con").fadeOut("slow");
   }
   render() {
     const charts = [
@@ -145,45 +158,22 @@ export default class CartoviewCharts extends React.Component {
     let chartElement = appConfig.chartsViewer.type != "all"
       ? charts.find(chart => chart.name == appConfig.chartsViewer.type).element
       : charts.map((chart) => chart.element);
-    let title = <h1 className="display-4 text-center">{appConfig.chartsViewer.chartTitle}</h1>
-    let description = <Typist className="MyTypist" cursor={{
-      show: true,
-      blink: true,
-      element: '|',
-      hideWhenDone: true,
-      hideWhenDoneDelay: 1000
-    }}>
-      {abstract}
-    </Typist>;
+    let title =appConfig.chartsViewer.chartTitle
 
     return (
       <div>
-        <Navbar color="faded" toggleable>
-          <NavbarBrand style={{
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }} href="/">Cartoview</NavbarBrand>
-        </Navbar>
+        <div className="page-header">
+          <div className="row">
+            <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8"><span className="h1">{title}</span></div>
+          </div>
+        </div>
 
-        <Container style={{
-          marginTop: 50,
-          marginBottom: 50
-        }}>
-          {title}
           <br></br>
-          <br></br>
-          <br></br>
-          <Row style={{
-            paddingBottom: 50
-          }}>
-            {description}
-          </Row>
           <Row>
             <div ref="map" className="map"></div>
           </Row>
           <hr></hr>
           {chartElement}
-        </Container>
       </div>
     )
   }
