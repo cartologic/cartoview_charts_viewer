@@ -164,26 +164,12 @@ export default class CartoviewCharts extends React.Component {
 
     return (
       <div>
-        <Navbar color="faded" toggleable>
-          <NavbarBrand style={{
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }} href="/">Cartoview</NavbarBrand>
-        </Navbar>
-
         <Container style={{
           marginTop: 50,
           marginBottom: 50
         }}>
           {title}
           <br></br>
-          <br></br>
-          <br></br>
-          <Row style={{
-            paddingBottom: 50
-          }}>
-            {description}
-          </Row>
           <Row>
             <div ref="map" className="map"></div>
           </Row>
