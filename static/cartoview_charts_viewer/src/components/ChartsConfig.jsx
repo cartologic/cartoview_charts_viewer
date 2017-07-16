@@ -156,7 +156,7 @@ export default class BasicConfig extends Component {
               })}
 
             </select>
-            {!this.state.loading && this.state.layers && this.state.attributes.length >0 && <button type="button" className="btn btn-info" data-toggle="modal" data-target="#numericTypes">!</button>}
+            {!this.state.loading && this.state.layers>0 && this.state.attributes.length ==0 && <button type="button" className="btn btn-info" data-toggle="modal" data-target="#numericTypes">!</button>}
             {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
           </div>
           <div className="form-group">
