@@ -71,7 +71,7 @@ export default class Edit extends Component {
             this.setState({
               config: Object.assign(this.state.config.config, basicConfig)
             })
-            this.editService.save(this.state.config,this.props.instance? this.props.config.instance.id : undefined).then((res)=>window.location.href="/apps/cartoview_charts_viewer/"+res.id+"/view")
+            this.editService.save(this.state.config,this.props.config.instance? this.props.config.instance.id : undefined).then((res)=>window.location.href="/apps/cartoview_charts_viewer/"+res.id+"/view")
           }
         }
       }

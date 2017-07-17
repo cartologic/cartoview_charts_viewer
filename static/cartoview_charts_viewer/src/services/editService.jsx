@@ -5,6 +5,7 @@ export default class EditService {
     this.maps = [];
   }
   save(instanceConfig, id) {
+        console.log(id);
     const url = id
       ? this.baseUrl + "apps/cartoview_charts_viewer/"+id+"/edit"
       : this.baseUrl + "apps/cartoview_charts_viewer/new"
