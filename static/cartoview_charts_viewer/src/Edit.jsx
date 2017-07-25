@@ -3,6 +3,7 @@ import './css/app.css'
 
 import ResourceSelector from './components/ResourceSelector.jsx'
 import General from './components/General.jsx'
+import NavigationTools from './components/NavigationTools.jsx'
 import Navigator from './components/Navigator.jsx';
 import BasicConfig from './components/BasicConfig.jsx'
 import ChartsConfig from './components/ChartsConfig.jsx'
@@ -66,6 +67,27 @@ export default class Edit extends Component {
             : undefined,
           onComplete: (basicConfig) => {
             let {step} = this.state;
+            this.setState({
+              config: Object.assign(this.state.config, basicConfig)
+            })
+            this.goToStep(++step)
+          },
+          onPrevious: () => {
+            this.onPrevious()
+          }
+        }
+      }, {
+        label: "Navigation Tools",
+        component: NavigationTools,
+        props: {
+          instance: this.state.selectedResource,
+          config: this.props.config.instance
+            ? this.props.config.instance.config
+            : this.state.config
+              ? this.state.config.config
+              : undefined,
+          onComplete: (basicConfig) => {
+            var {step} = this.state;
             this.setState({
               config: Object.assign(this.state.config, basicConfig)
             })
