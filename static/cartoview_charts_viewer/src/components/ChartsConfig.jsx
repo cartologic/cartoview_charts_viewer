@@ -78,6 +78,7 @@ export default class BasicConfig extends Component {
       loading: false
     }
   }
+
   loadLayers() {
     console.log(this.props.mapLayers);
     fetch(this.props.urls.mapLayers + "?id=" + this.props.resource.id).then((response) => response.json()).then((data) => {
@@ -86,6 +87,7 @@ export default class BasicConfig extends Component {
       console.error(error);
     });
   }
+
   loadAttributes() {
     let typename = this.refs.layer.value
     this.setState({loading: true})
@@ -97,15 +99,23 @@ export default class BasicConfig extends Component {
       });
     }
   }
+
   componentDidMount() {
     this.loadLayers()
   }
-  save(event) {
-    event.preventDefault();
+  componentWillReceiveProps(nextProps) {
+    console.log("nextProps:", nextProps);
+    this.setState({success: nextProps.success})
+  }
+  handleSubmit() {
+    this.refs.submitButton.click()
+  }
+  save(e) {
+    e.preventDefault();
     let config = {
       chartsViewer: {
         type: this.refs.chartType.value,
-        chartTitle: this.refs.title.value,
+        // chartTitle: this.refs.title.value,
         layer: this.refs.layer.value,
         attribute: this.refs.attribute.value,
         operation: this.refs.operation.value,
@@ -118,32 +128,82 @@ export default class BasicConfig extends Component {
     return (
       <div className="row">
         <div className="row">
-          <div className="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <h2>Charts Configurations</h2>
-          </div>
+          <div className="col-xs-5 col-md-4"></div>
+          <div className="col-xs-7 col-md-8">
+            <button style={{
+              display: "inline-block",
+              margin: "0px 3px 0px 3px"
+            }} className="btn btn-primary btn-sm pull-right disabled" onClick={this.save.bind(this)}>{"next >>"}</button>
 
-        </div>
-        <form onSubmit={this.save.bind(this)}>
-          <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Chart Title</label>
-            <input type="text" defaultValue={this.state.config.chartsViewer.chartTitle} className="form-control" ref="title" placeholder="title" required/>
+            <button style={{
+              display: "inline-block",
+              margin: "0px 3px 0px 3px"
+            }} className="btn btn-primary btn-sm pull-right" onClick={() => this.props.onPrevious()}>{"<< Previous"}</button>
           </div>
+        </div>
+        <div className="row" style={{
+          marginTop: "3%"
+        }}>
+          <div className="col-xs-5 col-md-4">
+            <h4>{'Charts Configurations '}</h4>
+          </div>
+          <div className="col-xs-7 col-md-8">
+            <a style={{
+              display: "inline-block",
+              margin: "0px 3px 0px 3px"
+            }} className={this.state.success === true
+              ? "btn btn-primary btn-sm pull-right"
+              : "btn btn-primary btn-sm pull-right disabled"} href={`/apps/cartoview_map_viewer_react/${this.props.id}/view/`}>
+              View
+            </a>
+
+            <a style={{
+              display: "inline-block",
+              margin: "0px 3px 0px 3px"
+            }} className={this.state.success === true
+              ? "btn btn-primary btn-sm pull-right"
+              : "btn btn-primary btn-sm pull-right disabled"} href={`/apps/appinstance/${this.props.id}/`} target={"_blank"}>
+              Details
+            </a>
+
+            <button style={{
+              display: "inline-block",
+              margin: "0px 3px 0px 3px"
+            }} className={this.state.success === true
+              ? "btn btn-primary btn-sm pull-right disabled"
+              : "btn btn-primary btn-sm pull-right"} onClick={this.handleSubmit.bind(this)}>Save</button>
+
+            <p style={this.state.success == true
+              ? {
+                display: "inline-block",
+                margin: "0px 3px 0px 3px",
+                float: "right"
+              }
+              : {
+                display: "none",
+                margin: "0px 3px 0px 3px",
+                float: "right"
+              }}>App instance successfully created!</p>
+          </div>
+        </div>
+        <hr></hr>
+
+        <form ref="form" onSubmit={this.save.bind(this)}>
           <div className="form-group">
-            <label>Choose Chart Type</label>
+            <label>Chart Type</label>
             <select className="form-control" defaultValue={this.state.config.chartsViewer.type} ref="chartType" required>
-              <option value={""}>Choose Type</option>
+              <option value={""}>Select Type</option>
               {chartTypes.map((chart) => {
                 return <option key={chart.name} value={chart.name}>
                   {chart.title}
                 </option>
               })}
             </select>
-
           </div>
           <div className="form-group">
-            <label>Choose Layer</label>
+            <label>Layer</label>
             <select className="form-control" ref="layer" defaultValue={this.state.config.chartsViewer.layer} onChange={this.loadAttributes.bind(this)} required>
-              <option value={""}>Choose Layer</option>
+              <option value={""}>Select Layer</option>
               {this.state.layers && this.state.layers.map((layer, i) => {
 
                 return <option key={layer.id} value={layer.typename}>
@@ -154,9 +214,9 @@ export default class BasicConfig extends Component {
             </select>
           </div>
           <div className="form-group">
-            <label>Choose Atrribute</label>
+            <label>Atrribute</label>
             <select className="form-control" defaultValue={this.state.config.chartsViewer.attribute} ref="attribute" required>
-              <option value={""}>Choose Attribute</option>
+              <option value={""}>Select Attribute</option>
               {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
                 let type = attribute.attribute_type;
                 if (numericTypes.indexOf(type) != -1 && type.indexOf("gml:") == -1) {
@@ -171,7 +231,7 @@ export default class BasicConfig extends Component {
             {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
           </div>
           <div className="form-group">
-            <label>Choose Operation</label>
+            <label>Operation</label>
             <select className="form-control" defaultValue={this.state.config.chartsViewer.operation} ref="operation" required>
               {this.state.layers && this.state.attributes && Object.keys(operations).map((key) => {
                 return <option key={key} value={key}>
@@ -184,20 +244,20 @@ export default class BasicConfig extends Component {
           <div className="form-group">
             <label>Group By</label>
             <select className="form-control" defaultValue={this.state.config.chartsViewer.groupBy} ref="groupBy" required>
-              <option value={""}>Choose Attribute</option>
+              <option value={""}>Select Attribute</option>
               {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
                 return <option key={attribute.id} value={attribute.attribute}>
                   {attribute.attribute || attribute.attribute_label}
                 </option>
               })}
-
             </select>
 
             {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
           </div>
-          <input type="submit" className="btn btn-primary" value="Submit"/> {this.props.id &&< a className = "btn btn-primary" href = {
-            this.props.urls.view
-          } > View < /a>}
+
+          <input ref="submitButton" type="submit" className="btn btn-primary" value="Submit" style={{
+            display: "none"
+          }}/>
         </form>
       </div>
     )

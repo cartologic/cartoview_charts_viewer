@@ -98,23 +98,6 @@ export default class Edit extends Component {
           }
         }
       }, {
-        label: "General & Tools",
-        component: BasicConfig,
-        props: {
-          instance: this.state.selectedResource,
-          config: this.props.config
-            ? this.props.config.config
-            : undefined,
-          onComplete: (basicConfig) => {
-            var {step} = this.state;
-
-            this.setState({
-              config: Object.assign(this.state.config, basicConfig)
-            })
-            this.goToStep(++step)
-          }
-        }
-      }, {
         label: "Charts Configrations",
         component: ChartsConfig,
         props: {
@@ -124,17 +107,25 @@ export default class Edit extends Component {
             : undefined,
           id: this.props.config.instance
             ? this.props.config.instance.id
-            : undefined,
+            : this.state.id
+              ? this.state.id
+              : undefined,
           urls: this.props.config.urls,
+          success: this.state.success,
           onComplete: (basicConfig) => {
             var {step} = this.state;
-
             this.setState({
               config: Object.assign(this.state.config.config, basicConfig)
             })
             this.editService.save(this.state.config, this.props.config.instance
               ? this.props.config.instance.id
-              : undefined).then((res) => window.location.href = "/apps/cartoview_charts_viewer/" + res.id + "/view")
+              : undefined).then((res) => {
+              if (res.success == true)
+                this.setState({success: true, id: res.id})
+            })
+          },
+          onPrevious: () => {
+            this.onPrevious()
           }
         }
       }

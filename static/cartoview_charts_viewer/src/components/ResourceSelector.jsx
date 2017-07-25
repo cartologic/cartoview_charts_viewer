@@ -112,14 +112,8 @@ export default class ResourceSelector extends Component {
             {(this.props.instance
               ? this.props.instance
               : false)
-              ? <button style={{
-                  display: "inline-block",
-                  margin: "0px 3px 0px 3px"
-                }} className="btn btn-primary btn-sm pull-right" onClick={() => this.props.onComplete()}>{"next >>"}</button>
-              : <button style={{
-                display: "inline-block",
-                margin: "0px 3px 0px 3px"
-              }} className="btn btn-primary btn-sm pull-right disabled" onClick={() => this.props.onComplete()}>{"next >>"}</button>
+              ? <button className="btn btn-primary btn-sm pull-right" onClick={() => this.props.onComplete()}>{"next >>"}</button>
+              : <button className="btn btn-primary btn-sm pull-right disabled" onClick={() => this.props.onComplete()}>{"next >>"}</button>
 }
           </div>
         </div>
