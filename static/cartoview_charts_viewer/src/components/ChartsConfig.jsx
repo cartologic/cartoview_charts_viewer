@@ -55,20 +55,32 @@ export default class BasicConfig extends Component {
       attributes: [],
       config: {
         chartsViewer: {
-          type: this.props.instance ? this.props.instance.type :"",
-          chartTitle: this.props.instance ? this.props.instance.chartTitle : "",
-          layer: this.props.instance ? this.props.instance.layer : "",
-          attribute: this.props.instance ? this.props.instance.attribute : "",
-          operation: this.props.instance ? this.props.instance.operation : "",
-          groupBy: this.props.instance ? this.props.instance.groupBy : ""
+          type: this.props.instance
+            ? this.props.instance.type
+            : "",
+          chartTitle: this.props.instance
+            ? this.props.instance.chartTitle
+            : "",
+          layer: this.props.instance
+            ? this.props.instance.layer
+            : "",
+          attribute: this.props.instance
+            ? this.props.instance.attribute
+            : "",
+          operation: this.props.instance
+            ? this.props.instance.operation
+            : "",
+          groupBy: this.props.instance
+            ? this.props.instance.groupBy
+            : ""
         }
       },
-      loading:false
+      loading: false
     }
   }
   loadLayers() {
-    fetch(this.props.urls.mapLayers +
-      "?id=" + this.props.resource.id).then((response) => response.json()).then((data) => {
+    console.log(this.props.mapLayers);
+    fetch(this.props.urls.mapLayers + "?id=" + this.props.resource.id).then((response) => response.json()).then((data) => {
       this.setState({layers: data.objects})
     }).catch((error) => {
       console.error(error);
@@ -76,11 +88,10 @@ export default class BasicConfig extends Component {
   }
   loadAttributes() {
     let typename = this.refs.layer.value
-    this.setState({loading:true})
+    this.setState({loading: true})
     if (typename != "") {
-      fetch(this.props.urls.layerAttributes +
-        "?layer__typename=" + typename).then((response) => response.json()).then((data) => {
-        this.setState({attributes: data.objects,loading:false})
+      fetch(this.props.urls.layerAttributes + "?layer__typename=" + typename).then((response) => response.json()).then((data) => {
+        this.setState({attributes: data.objects, loading: false})
       }).catch((error) => {
         console.error(error);
       });
@@ -156,7 +167,7 @@ export default class BasicConfig extends Component {
               })}
 
             </select>
-            {!this.state.loading && this.state.layers>0 && this.state.attributes.length ==0 && <button type="button" className="btn btn-info" data-toggle="modal" data-target="#numericTypes">!</button>}
+            {!this.state.loading && this.state.layers > 0 && this.state.attributes.length == 0 && <button type="button" className="btn btn-info" data-toggle="modal" data-target="#numericTypes">!</button>}
             {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
           </div>
           <div className="form-group">
@@ -184,8 +195,9 @@ export default class BasicConfig extends Component {
 
             {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
           </div>
-          <input type="submit" className="btn btn-primary" value="Submit"/>
-          {this.props.id&&<a className="btn btn-primary" href={this.props.urls.view}>View</a>}
+          <input type="submit" className="btn btn-primary" value="Submit"/> {this.props.id &&< a className = "btn btn-primary" href = {
+            this.props.urls.view
+          } > View < /a>}
         </form>
       </div>
     )
