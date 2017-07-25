@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import './css/app.css'
-import Navigator from './components/Navigator.jsx';
+
 import ResourceSelector from './components/ResourceSelector.jsx'
+import General from './components/General.jsx'
+import Navigator from './components/Navigator.jsx';
 import BasicConfig from './components/BasicConfig.jsx'
-import EditService from './services/editService.jsx'
 import ChartsConfig from './components/ChartsConfig.jsx'
+
+import EditService from './services/editService.jsx'
+
 export default class Edit extends Component {
   constructor(props) {
     super(props)
@@ -21,6 +25,12 @@ export default class Edit extends Component {
   goToStep(step) {
     this.setState({step});
   }
+
+  onPrevious() {
+    let {step} = this.state;
+    this.goToStep(step -= 1)
+  }
+
   render() {
     var {step} = this.state
     const steps = [
@@ -41,6 +51,28 @@ export default class Edit extends Component {
               config: Object.assign(this.state.config, {map: this.state.selectedResource.id})
             })
             this.goToStep(++step)
+          }
+        }
+      }, {
+        label: "General ",
+        component: General,
+        props: {
+          state: this.state,
+          keywords: this.props.keywords,
+          urls: this.props.config.urls,
+          instance: this.state.selectedResource,
+          config: this.props.config.instance
+            ? this.props.config.instance.config
+            : undefined,
+          onComplete: (basicConfig) => {
+            let {step} = this.state;
+            this.setState({
+              config: Object.assign(this.state.config, basicConfig)
+            })
+            this.goToStep(++step)
+          },
+          onPrevious: () => {
+            this.onPrevious()
           }
         }
       }, {
