@@ -192,100 +192,111 @@ export default class BasicConfig extends Component {
                 display: "none",
                 margin: "0px 3px 0px 3px",
                 float: "right"
-              }}>App instance successfully created!</p>
+              }}>App instance successfully saved!</p>
           </div>
         </div>
         <hr></hr>
 
         <form ref="form" onSubmit={this.save.bind(this)}>
-          <div className="form-group">
-            <label>Chart Type</label>
-            <select className="form-control" defaultValue={this.state.config.chartsViewer.type} ref="chartType" required>
-              <option value={""}>Select Type</option>
-              {chartTypes.map((chart) => {
-                return <option key={chart.name} value={chart.name}>
-                  {chart.title}
-                </option>
-              })}
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Layer</label>
-            <select className="form-control" ref="layer" value={this.state.config.chartsViewer.layer} onChange={(e) => {
-              let config = this.state.config;
-              config.chartsViewer.layer = e.target.value;
-              this.setState({
-                config: config
-              }, () => {
-                this.loadAttributes()
-              })
-            }} required>
-              <option value={""}>Select Layer</option>
-              {this.state.layers && this.state.layers.map((layer, i) => {
-                return <option key={layer.id} value={layer.typename}>
-                  {layer.title}
-                </option>
-              })}
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Atrribute</label>
-            <select className="form-control" value={this.state.config.chartsViewer.attribute} onChange={(e) => {
-              let config = this.state.config;
-              config.chartsViewer.attribute = e.target.value;
-              this.setState({config: config})
-            }} ref="attribute" required>
-              <option value={""}>Select Attribute</option>
+          <div className="row">
+            <div className="col-xs-12 col-md-12">
+              <div className="form-group">
+                <label>Chart Type</label>
+                <select className="form-control" defaultValue={this.state.config.chartsViewer.type} ref="chartType" required>
+                  <option value={""}>Select Type</option>
+                  {chartTypes.map((chart) => {
+                    return <option key={chart.name} value={chart.name}>
+                      {chart.title}
+                    </option>
+                  })}
+                </select>
+              </div>
+            </div>
+            <div className="col-xs-12 col-md-12">
+              <div className="form-group">
+                <label>Layer</label>
+                <select className="form-control" ref="layer" value={this.state.config.chartsViewer.layer} onChange={(e) => {
+                  let config = this.state.config;
+                  config.chartsViewer.layer = e.target.value;
+                  this.setState({
+                    config: config
+                  }, () => {
+                    this.loadAttributes()
+                  })
+                }} required>
+                  <option value={""}>Select Layer</option>
+                  {this.state.layers && this.state.layers.map((layer, i) => {
+                    return <option key={layer.id} value={layer.typename}>
+                      {layer.title}
+                    </option>
+                  })}
+                </select>
+              </div>
+            </div>
+            <div className="col-xs-12 col-md-4">
+              <div className="form-group">
+                <label>Atrribute</label>
+                <select className="form-control" value={this.state.config.chartsViewer.attribute} onChange={(e) => {
+                  let config = this.state.config;
+                  config.chartsViewer.attribute = e.target.value;
+                  this.setState({config: config})
+                }} ref="attribute" required>
+                  <option value={""}>Select Attribute</option>
 
-              {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
-                let type = attribute.attribute_type;
-                if (numericTypes.indexOf(type) != -1 && type.indexOf("gml:") == -1) {
-                  return <option key={attribute.id} value={attribute.attribute}>
-                    {attribute.attribute || attribute.attribute_label}
-                  </option>
-                }
-              })}
+                  {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
+                    let type = attribute.attribute_type;
+                    if (numericTypes.indexOf(type) != -1 && type.indexOf("gml:") == -1) {
+                      return <option key={attribute.id} value={attribute.attribute}>
+                        {attribute.attribute || attribute.attribute_label}
+                      </option>
+                    }
+                  })}
 
-            </select>
-            {!this.state.loading && this.state.layers > 0 && this.state.attributes.length == 0 && <button type="button" className="btn btn-info" data-toggle="modal" data-target="#numericTypes">!</button>}
-            {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
+                </select>
+                {!this.state.loading && this.state.layers > 0 && this.state.attributes.length == 0 && <button type="button" className="btn btn-info" data-toggle="modal" data-target="#numericTypes">!</button>}
+                {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
+              </div>
+            </div>
+            <div className="col-xs-12 col-md-4">
+              <div className="form-group">
+                <label>Operation</label>
+                <select className="form-control" value={this.state.config.chartsViewer.operation} onChange={(e) => {
+                  let config = this.state.config;
+                  config.chartsViewer.operation = e.target.value;
+                  this.setState({config: config})
+                }} ref="operation" required>
+                  {this.state.layers && this.state.attributes && Object.keys(operations).map((key) => {
+                    return <option key={key} value={key}>
+                      {operations[key]}
+                    </option>
+                  })}
+                </select>
+              </div>
+            </div>
+            <div className="col-xs-12 col-md-4">
+              <div className="form-group">
+                <label>Group By</label>
+                <select className="form-control" value={this.state.config.chartsViewer.groupBy} onChange={(e) => {
+                  let config = this.state.config;
+                  config.chartsViewer.groupBy = e.target.value;
+                  this.setState({config: config})
+                }} ref="groupBy" required>
+                  <option value={""}>Select Attribute</option>
+                  {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
+                    return <option key={attribute.id} value={attribute.attribute}>
+                      {attribute.attribute || attribute.attribute_label}
+                    </option>
+                  })}
+                </select>
+
+                {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
+              </div>
+            </div>
+
+            <input ref="submitButton" type="submit" className="btn btn-primary" value="Submit" style={{
+              display: "none"
+            }}/>
           </div>
-          <div className="form-group">
-            <label>Operation</label>
-            <select className="form-control" value={this.state.config.chartsViewer.operation} onChange={(e) => {
-              let config = this.state.config;
-              config.chartsViewer.operation = e.target.value;
-              this.setState({config: config})
-            }} ref="operation" required>
-              {this.state.layers && this.state.attributes && Object.keys(operations).map((key) => {
-                return <option key={key} value={key}>
-                  {operations[key]}
-                </option>
-              })}
-            </select>
-
-          </div>
-          <div className="form-group">
-            <label>Group By</label>
-            <select className="form-control" value={this.state.config.chartsViewer.groupBy} onChange={(e) => {
-              let config = this.state.config;
-              config.chartsViewer.groupBy = e.target.value;
-              this.setState({config: config})
-            }} ref="groupBy" required>
-              <option value={""}>Select Attribute</option>
-              {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
-                return <option key={attribute.id} value={attribute.attribute}>
-                  {attribute.attribute || attribute.attribute_label}
-                </option>
-              })}
-            </select>
-
-            {this.state.loading && <Spinner name="line-scale-pulse-out" color="steelblue"/>}
-          </div>
-
-          <input ref="submitButton" type="submit" className="btn btn-primary" value="Submit" style={{
-            display: "none"
-          }}/>
         </form>
       </div>
     )
