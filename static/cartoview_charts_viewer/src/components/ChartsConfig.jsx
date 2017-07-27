@@ -80,7 +80,6 @@ export default class BasicConfig extends Component {
   }
 
   loadLayers() {
-    console.log(this.props.mapLayers);
     fetch(this.props.urls.mapLayers + "?id=" + this.props.resource.id).then((response) => response.json()).then((data) => {
       this.setState({layers: data.objects})
     }).catch((error) => {
@@ -104,7 +103,6 @@ export default class BasicConfig extends Component {
     this.loadLayers()
   }
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps:", nextProps);
     this.setState({success: nextProps.success})
   }
   handleSubmit() {
@@ -153,7 +151,7 @@ export default class BasicConfig extends Component {
               margin: "0px 3px 0px 3px"
             }} className={this.state.success === true
               ? "btn btn-primary btn-sm pull-right"
-              : "btn btn-primary btn-sm pull-right disabled"} href={`/apps/cartoview_map_viewer_react/${this.props.id}/view/`}>
+              : "btn btn-primary btn-sm pull-right disabled"} href={`/apps/cartoview_charts_viewer/${this.props.id}/view/`}>
               View
             </a>
 
