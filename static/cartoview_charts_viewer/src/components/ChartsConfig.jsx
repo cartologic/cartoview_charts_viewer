@@ -87,9 +87,16 @@ export default class BasicConfig extends Component {
     });
   }
 
-  loadAttributes() {
-    let typename = this.refs.layer.value
-    this.setState({loading: true})
+  loadAttributes(_typename) {
+    let typename = typeof _typename == 'string'
+      ? _typename
+      : this.refs.layer.value != ''
+        ? this.refs.layer.value
+        : () => {
+          this.setState({attributes: []})
+          return null
+        }
+        this.setState({loading: true})
     if (typename != "") {
       fetch(this.props.urls.layerAttributes + "?layer__typename=" + typename).then((response) => response.json()).then((data) => {
         this.setState({attributes: data.objects, loading: false})
@@ -101,6 +108,9 @@ export default class BasicConfig extends Component {
 
   componentDidMount() {
     this.loadLayers()
+    if (this.props.instance) {
+      this.loadAttributes(this.props.instance.layer);
+    }
   }
   componentWillReceiveProps(nextProps) {
     this.setState({success: nextProps.success})
@@ -120,6 +130,7 @@ export default class BasicConfig extends Component {
         groupBy: this.refs.groupBy.value
       }
     }
+    console.log(config);
     this.props.onComplete(config)
   }
   render() {
@@ -200,21 +211,32 @@ export default class BasicConfig extends Component {
           </div>
           <div className="form-group">
             <label>Layer</label>
-            <select className="form-control" ref="layer" defaultValue={this.state.config.chartsViewer.layer} onChange={this.loadAttributes.bind(this)} required>
+            <select className="form-control" ref="layer" value={this.state.config.chartsViewer.layer} onChange={(e) => {
+              let config = this.state.config;
+              config.chartsViewer.layer = e.target.value;
+              this.setState({
+                config: config
+              }, () => {
+                this.loadAttributes()
+              })
+            }} required>
               <option value={""}>Select Layer</option>
               {this.state.layers && this.state.layers.map((layer, i) => {
-
                 return <option key={layer.id} value={layer.typename}>
                   {layer.title}
                 </option>
               })}
-
             </select>
           </div>
           <div className="form-group">
             <label>Atrribute</label>
-            <select className="form-control" defaultValue={this.state.config.chartsViewer.attribute} ref="attribute" required>
+            <select className="form-control" value={this.state.config.chartsViewer.attribute} onChange={(e) => {
+              let config = this.state.config;
+              config.chartsViewer.attribute = e.target.value;
+              this.setState({config: config})
+            }} ref="attribute" required>
               <option value={""}>Select Attribute</option>
+
               {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
                 let type = attribute.attribute_type;
                 if (numericTypes.indexOf(type) != -1 && type.indexOf("gml:") == -1) {
@@ -230,7 +252,11 @@ export default class BasicConfig extends Component {
           </div>
           <div className="form-group">
             <label>Operation</label>
-            <select className="form-control" defaultValue={this.state.config.chartsViewer.operation} ref="operation" required>
+            <select className="form-control" value={this.state.config.chartsViewer.operation} onChange={(e) => {
+              let config = this.state.config;
+              config.chartsViewer.operation = e.target.value;
+              this.setState({config: config})
+            }} ref="operation" required>
               {this.state.layers && this.state.attributes && Object.keys(operations).map((key) => {
                 return <option key={key} value={key}>
                   {operations[key]}
@@ -241,7 +267,11 @@ export default class BasicConfig extends Component {
           </div>
           <div className="form-group">
             <label>Group By</label>
-            <select className="form-control" defaultValue={this.state.config.chartsViewer.groupBy} ref="groupBy" required>
+            <select className="form-control" value={this.state.config.chartsViewer.groupBy} onChange={(e) => {
+              let config = this.state.config;
+              config.chartsViewer.groupBy = e.target.value;
+              this.setState({config: config})
+            }} ref="groupBy" required>
               <option value={""}>Select Attribute</option>
               {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
                 return <option key={attribute.id} value={attribute.attribute}>
