@@ -4,6 +4,7 @@ import json
 from guardian.shortcuts import get_objects_for_user
 from geonode.maps.views import _resolve_map, _PERMISSION_MSG_VIEW
 from cartoview.app_manager.models import AppInstance, App
+from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from cartoview.app_manager.views import _resolve_appinstance
 from . import APP_NAME
@@ -85,10 +86,13 @@ def new(request, template="%s/new.html" % APP_NAME, app_name=APP_NAME, context={
 def edit(request, instance_id, template="%s/edit.html" % APP_NAME, context={}):
     instance = _resolve_appinstance(
         request, instance_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
+
     if request.method == 'POST':
         return save(request, instance_id)
-    instance = AppInstance.objects.get(pk=instance_id)
+
     context.update(instance=instance)
+    context.update(keywords=mark_safe(json.dumps(instance.keyword_list())))
+
     return render(request, template, context)
 
 
