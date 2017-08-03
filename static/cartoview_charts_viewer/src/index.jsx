@@ -40,7 +40,7 @@ export default class CartoviewCharts extends React.Component {
     });
     this.map.on('moveend', () => {
 
-      if(!this.state.loading){
+      if (!this.state.loading) {
         var extent = this.map.getView().calculateExtent(this.map.getSize());
         this.wpsClient.aggregateWithFilters({
           aggregationAttribute: appConfig.chartsViewer.attribute,
@@ -48,13 +48,12 @@ export default class CartoviewCharts extends React.Component {
           groupBy: {
             attributes: appConfig.chartsViewer.groupBy
           },
-          filters:{
-            minx:extent[0],
-            miny:extent[1],
-            maxx:extent[2],
-            maxy:extent[3]
-          }
-          ,
+          filters: {
+            minx: extent[0],
+            miny: extent[1],
+            maxx: extent[2],
+            maxy: extent[3]
+          },
           typeName: appConfig.chartsViewer.layer
         }).then((data) => {
           var labels = data.AggregationResults.map((item) => item[0]);
@@ -66,7 +65,6 @@ export default class CartoviewCharts extends React.Component {
         });
         // console.log(extent);
       }
-
 
     });
     this.wpsClient = new WpsClient({geoserverUrl: geoserver_url});
@@ -105,10 +103,10 @@ export default class CartoviewCharts extends React.Component {
     this.update(this.state.config);
   }
   toggle() {
-  this.setState({
-    modal: !this.state.modal
-  });
-}
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
   dynamicColor() {
     var r = Math.floor(Math.random() * 255);
     var g = Math.floor(Math.random() * 255);
@@ -128,7 +126,7 @@ export default class CartoviewCharts extends React.Component {
       var labels = data.AggregationResults.map((item) => item[0]);
       var values = data.AggregationResults.map((item) => item[1]);
       var colors = data.AggregationResults.map((item) => this.dynamicColor());
-      this.setState({data: values, labels: labels, colors: colors,loading:false});
+      this.setState({data: values, labels: labels, colors: colors, loading: false});
       $(".se-pre-con").fadeOut("slow");
     }).catch((error) => {
       console.error(error);
@@ -158,22 +156,23 @@ export default class CartoviewCharts extends React.Component {
     let chartElement = appConfig.chartsViewer.type != "all"
       ? charts.find(chart => chart.name == appConfig.chartsViewer.type).element
       : charts.map((chart) => chart.element);
-    let title =appConfig.chartsViewer.chartTitle
 
     return (
       <div>
         <div className="page-header">
           <div className="row">
-            <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8"><span className="h1">{title}</span></div>
+            <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <span className="h1">{title}</span>
+            </div>
           </div>
         </div>
 
-          <br></br>
-          <Row>
-            <div ref="map" className="map"></div>
-          </Row>
-          <hr></hr>
-          {chartElement}
+        <br></br>
+        <Row>
+          <div ref="map" className="map"></div>
+        </Row>
+        <hr></hr>
+        {chartElement}
       </div>
     )
   }
