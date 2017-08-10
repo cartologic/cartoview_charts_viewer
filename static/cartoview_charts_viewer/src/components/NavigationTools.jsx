@@ -13,7 +13,7 @@ import t from 'tcomb-form';
 //   zoomControls: zoomControls
 // })
 
-const mapConfig = t.struct({showZoombar: t.Boolean, showLayerSwitcher: t.Boolean, showBaseMapSwitcher: t.Boolean, showLegend: t.Boolean});
+const mapConfig = t.struct({showZoombar: t.Boolean, showLayerSwitcher: t.Boolean, showBasemapSwitcher: t.Boolean, showLegend: t.Boolean});
 
 const options = {
   fields: {
@@ -23,8 +23,8 @@ const options = {
     showLayerSwitcher: {
       label: "Layer Switcher"
     },
-    showBaseMapSwitcher: {
-      showBaseMapSwitcher: "Base Map Switcher"
+    showBasemapSwitcher: {
+      showBasemapSwitcher: "Base Map Switcher"
     },
     showLegend: {
       label: "Legend"
@@ -45,8 +45,8 @@ export default class NavigationTools extends Component {
         showLayerSwitcher: this.props.config
           ? this.props.config.showLayerSwitcher
           : true,
-        showBaseMapSwitcher: this.props.config
-          ? this.props.config.showBaseMapSwitcher
+        showBasemapSwitcher: this.props.config
+          ? this.props.config.showBasemapSwitcher
           : true,
         showLegend: this.props.config
           ? this.props.config.showLegend
@@ -62,7 +62,7 @@ export default class NavigationTools extends Component {
         config: {
           showZoombar: basicConfig.showZoombar,
           showLayerSwitcher: basicConfig.showLayerSwitcher,
-          showBaseMapSwitcher: basicConfig.showBaseMapSwitcher,
+          showBasemapSwitcher: basicConfig.showBasemapSwitcher,
           showLegend: basicConfig.showLegend
         }
       }
