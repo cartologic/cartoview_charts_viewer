@@ -1,7 +1,7 @@
 {% extends "app_manager/app_install_base.html" %}
 {% load bootstrap_tags staticfiles %}
 {% load i18n %}
-
+{% load cartoview_tags %}
 {% block title %} {% trans "Charts Viewer" %} {% endblock %}
 {% block head %}
     {% include "geonode/ext_header.html" %}
@@ -34,7 +34,7 @@
   var instance_id={{instance.id}};
   var geoserver_url = "{{ GEOSERVER_BASE_URL }}";
   var abstract = " {% spaceless %}{{ instance.abstract|title }}{% endspaceless %} ";
-  var keywords = {{keywords|safeseq}}
+  var keywords = {{instance.keyword_list|jsonify}}
   {% endif %}
   var username = "{{instance.owner.username}}"
   var viewer=new Viewer('root',{'instance':{map:{id:map_id,title:title,abstract:abstract},id:instance_id,config:appConfig},'urls':{'resources_url':"/api/maps",'mapLayers':"/apps/maplayers/api","layerAttributes":"/apps/rest/app_manager/geonodelayerattribute/","view":"/apps/cartoview_charts_viewer/"+instance_id+"/view/"},'limit':9},username, keywords);
