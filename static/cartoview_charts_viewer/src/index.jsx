@@ -1,30 +1,32 @@
-import React from 'react';
-import {render, findDOMNode} from 'react-dom';
-import BarChart from './BarChart';
-import MapConfigTransformService from '@boundlessgeo/sdk/services/MapConfigTransformService';
-import MapConfigService from '@boundlessgeo/sdk/services/MapConfigService';
-import ol from 'openlayers'
-import DoughnutChart from './DoughnutChart';
-import PieChart from './PieChart';
-import LineChart from './LineChart';
-import RadarChart from './RadarChart';
-import WpsClient from './wps-client.jsx';
-import Typist from 'react-typist';
-import $ from "jquery";
 import 'openlayers/css/ol.css';
 import './app.css';
+
 import {
-  Container,
-  Row,
   Col,
   Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
+  Container,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  Row
 } from 'reactstrap';
+import {findDOMNode, render} from 'react-dom';
+
+import $ from "jquery";
+import BarChart from './BarChart';
+import DoughnutChart from './DoughnutChart';
+import LineChart from './LineChart';
+import MapConfigService from '@boundlessgeo/sdk/services/MapConfigService';
+import MapConfigTransformService from '@boundlessgeo/sdk/services/MapConfigTransformService';
+import PieChart from './PieChart';
+import RadarChart from './RadarChart';
+import React from 'react';
+import Typist from 'react-typist';
+import WpsClient from './wps-client.jsx';
+import ol from 'openlayers'
 export default class CartoviewCharts extends React.Component {
   constructor(props) {
     super(props)
@@ -91,7 +93,7 @@ export default class CartoviewCharts extends React.Component {
         }
       }).then((config) => {
         if (config) {
-          MapConfigService.load(MapConfigTransformService.transform(config), this.map);
+          MapConfigService.load(MapConfigTransformService.transform(config), this.map,PROXY_URL);
         }
       }).catch((error) => {
         console.error(error);
