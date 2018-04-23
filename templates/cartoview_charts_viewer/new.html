@@ -3,12 +3,7 @@
 {% load i18n %}
 
 {% block title %} {% trans "Charts Viewer" %} {% endblock %}
-{% block head %}
-    {% include "geonode/ext_header.html" %}
-    {% include "geonode/app_header.html" %}
-    {{ block.super }}
 
-{% endblock %}
 {% block body %}
     <div id="page-wrapper">
         <div class="container-fluid">
@@ -28,7 +23,7 @@
     <script src="{{ STATIC_URL }}cartoview_charts_viewer/dist/config.bundle.js"></script>
     <script>
     var username="{{request.user.username}}"
-    var viewer=new Viewer('root',{'urls':{'resources_url':"/api/maps","mapLayers":"/apps/maplayers/api","layerAttributes":"/apps/rest/app_manager/geonodelayerattribute/"},'limit':9},username);
+    var viewer=new Viewer('root',{'urls':{'resources_url':"/api/maps","mapLayers":"/apps/maplayers/api","layerAttributes":"/api/attributes/"},'limit':9},username);
     viewer.view();
     </script>
     <div id="myModal" class="modal fade" role="dialog">

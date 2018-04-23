@@ -3,11 +3,7 @@
 {% load i18n %}
 {% load cartoview_tags %}
 {% block title %} {% trans "Charts Viewer" %} {% endblock %}
-{% block head %}
-    {% include "geonode/ext_header.html" %}
-    {% include "geonode/app_header.html" %}
-    {{ block.super }}
-{% endblock %}
+
 {% block body %}
     <div id="page-wrapper">
         <div class="container-fluid">
@@ -37,7 +33,7 @@
   var keywords = {{instance.keyword_list|jsonify}}
   {% endif %}
   var username = "{{instance.owner.username}}"
-  var viewer=new Viewer('root',{'instance':{map:{id:map_id,title:title,abstract:abstract},id:instance_id,config:appConfig},'urls':{'resources_url':"/api/maps",'mapLayers':"/apps/maplayers/api","layerAttributes":"/apps/rest/app_manager/geonodelayerattribute/","view":"/apps/cartoview_charts_viewer/"+instance_id+"/view/"},'limit':9},username, keywords);
+  var viewer=new Viewer('root',{'instance':{map:{id:map_id,title:title,abstract:abstract},id:instance_id,config:appConfig},'urls':{'resources_url':"/api/maps",'mapLayers':"/apps/maplayers/api","layerAttributes":"/api/attributes/","view":"/apps/cartoview_charts_viewer/"+instance_id+"/view/"},'limit':9},username, keywords);
   viewer.view();
   </script>
   <script>

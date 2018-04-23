@@ -28,10 +28,11 @@ class WpsClient {
     aggregateWithFilters(params){
         return fetch(this.url, {
           method: 'POST',
-          credentials: "same-origin",
+          credentials: "include",
           body: this.getXml(xmlTpls.aggregateWithFilters, params),
           headers: new Headers({
             'Content-Type': 'text/xml',
+            "X-CSRFToken": getCRSFToken()
           }),
         }).then(response => response.json());
     }

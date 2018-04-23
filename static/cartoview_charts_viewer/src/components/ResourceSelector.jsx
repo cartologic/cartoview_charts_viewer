@@ -36,7 +36,11 @@ export default class ResourceSelector extends Component {
       "=" + this.props.username + "")
       : "";
 
-    fetch(this.props.resourcesUrl + "?limit=" + limit + "&" + "offset=" + offset + userMapsFilter).then((response) => response.json()).then((data) => {
+    fetch(this.props.resourcesUrl + "?limit=" + limit + "&" + "offset=" + offset + userMapsFilter, {credentials: 'include',})
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
       this.setState({
         resources: data.objects,
         pageCount: Math.ceil(data.meta.total_count / limit),
