@@ -283,9 +283,10 @@ export default class BasicConfig extends Component {
                 }} ref="groupBy" required>
                   <option value={""}>Select Attribute</option>
                   {this.state.layers && this.state.attributes && this.state.attributes.map((attribute) => {
-                    return <option key={attribute.id} value={attribute.attribute}>
-                      {attribute.attribute || attribute.attribute_label}
-                    </option>
+                    if (attribute.attribute_type.indexOf("gml:") == -1)
+                      return <option key={attribute.id} value={attribute.attribute}>
+                        {attribute.attribute || attribute.attribute_label}
+                      </option>
                   })}
                 </select>
 
