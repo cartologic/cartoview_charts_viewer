@@ -5,3 +5,8 @@
   border: 2px solid gray;
   border-radius: 5px;
 }
+
+.permisson-error-panel{
+  width: 80%;
+  margin: 20px auto;
+}

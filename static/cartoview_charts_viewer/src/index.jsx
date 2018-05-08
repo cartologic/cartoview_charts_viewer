@@ -88,6 +88,9 @@ export default class CartoviewCharts extends React.Component {
         method: "GET",
         credentials: 'include'
       }).then((response) => {
+        if (response.status == 403) {
+          this.setState({permissionError: true, loading: false})
+        }
         if (response.status == 200) {
           return response.json();
         }
@@ -135,7 +138,22 @@ export default class CartoviewCharts extends React.Component {
     });
     // $(".se-pre-con").fadeOut("slow");
   }
+  renderPermissionErrorMessage(){
+    return (
+      <div className="panel panel-danger permisson-error-panel">
+        <div className="panel-heading">
+          <h3 className="panel-title">Permission Error!</h3>
+        </div>
+        <div className="panel-body">
+          The map used to view this app is private.
+          {/* where appInstanceUrl defined in the template view.html */}
+          <button className={'btn btn-default btn-sm pull-right'} onClick={()=>{window.location.replace(appInstanceUrl)}}>Back To Apps</button>
+        </div>
+      </div>
+    )
+  }
   render() {
+    if (this.state.permissionError) return (this.renderPermissionErrorMessage())
     const charts = [
       {
         name: 'bar',

@@ -52,6 +52,7 @@
     var appConfig = {{ instance.config | safe }};
     var map_id={{instance.map_id}};
     var title = '{{instance.title}}'
+    const appInstanceUrl = "{% url 'appinstance_browse' %}?app__name={{instance.app.name}}&app__title={{instance.app.title}}";    
     {% if PROXY_URL %}
         const PROXY_URL='{{PROXY_URL}}'
     {% else %}
